@@ -7,9 +7,9 @@ import { PremonitionLogo } from "@/components/icons/premonition-logo";
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
+    <section className="relative min-h-screen flex flex-col">
       {/* Subtle grid background */}
-      <div className="absolute inset-0 opacity-[0.02] overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.02]">
         <div
           className="absolute inset-0"
           style={{
@@ -23,7 +23,7 @@ export const Hero = () => {
       </div>
 
       {/* Gradient accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100vw] max-w-[800px] h-[400px] sm:h-[600px] bg-gradient-radial from-[#54BBF7]/[0.07] via-transparent to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[400px] sm:h-[600px] bg-gradient-radial from-[#54BBF7]/[0.07] via-transparent to-transparent blur-3xl" />
 
       {/* Navigation */}
       <nav className="relative z-20 flex items-center px-4 sm:px-6 lg:px-12 py-4 sm:py-6">
