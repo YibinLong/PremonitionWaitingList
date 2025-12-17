@@ -1,11 +1,44 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2, Check } from "lucide-react";
+import { toast } from "sonner";
 import { PremonitionLogo } from "@/components/icons/premonition-logo";
 
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwcj3tL6u-QFi_1juqKaiD8ewFC_47_88SYwrKxB7qDgmkwHM39pr_40dDNumro9bsekg/exec";
+
 export const Hero = () => {
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setIsSubmitted(true);
+      setEmail("");
+      toast.success("You're on the list!", {
+        description: "We'll notify you when we launch.",
+      });
+    } catch {
+      toast.error("Something went wrong", {
+        description: "Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <section className="relative min-h-screen flex flex-col">
       {/* Subtle grid background */}
@@ -76,20 +109,47 @@ export const Hero = () => {
             Everything you need to trade prediction markets professionally.
           </motion.p>
 
-          {/* CTA */}
+          {/* Email Signup */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="pt-2 sm:pt-4"
           >
-            <Link
-              href="/#"
-              className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-lg bg-[#EEF0F1] text-[#070709] font-semibold text-sm sm:text-base hover:bg-white transition-colors min-h-[48px] touch-manipulation"
-            >
-              Enter Terminal
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
+            {isSubmitted ? (
+              <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#131419] border border-[#4DBE95]/30 text-[#4DBE95]">
+                <Check className="w-5 h-5" />
+                <span className="font-medium">You&apos;re on the list!</span>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md mx-auto"
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="w-full sm:flex-1 px-4 py-3.5 rounded-lg bg-[#131419] border border-[#1e1f25] text-[#EEF0F1] placeholder-[#64727C] focus:outline-none focus:border-[#54BBF7]/50 focus:ring-1 focus:ring-[#54BBF7]/50 transition-colors text-sm sm:text-base"
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-lg bg-[#EEF0F1] text-[#070709] font-semibold text-sm sm:text-base hover:bg-white transition-colors min-h-[48px] touch-manipulation disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      Join Waitlist
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>
