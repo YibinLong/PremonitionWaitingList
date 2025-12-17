@@ -1,0 +1,421 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Custom colors for prediction markets */
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --color-kalshi: var(--kalshi);
+  --color-polymarket: var(--polymarket);
+}
+
+/* Fey Design System Theme */
+:root {
+  --radius: 0.625rem;
+
+  /* Fey backgrounds - deeper blacks */
+  --background: #070709;        /* BG-100 - deepest */
+  --foreground: #EEF0F1;        /* Grey-100 */
+
+  /* Card surfaces - Fey elevation */
+  --card: #131419;              /* BG-300 */
+  --card-hover: #16181C;        /* BG-400 */
+  --card-foreground: #EEF0F1;
+  --popover: #101116;           /* BG-200 */
+  --popover-foreground: #EEF0F1;
+
+  /* Primary - Fey sky blue */
+  --primary: #54BBF7;
+  --primary-foreground: #070709;
+
+  /* Surfaces */
+  --secondary: #101116;         /* BG-200 */
+  --secondary-foreground: #B6BEC4; /* Grey-300 */
+  --muted: #131419;             /* BG-300 */
+  --muted-foreground: #7D8B96;  /* Grey-500 */
+  --faint: #4E5860;             /* Grey-700 */
+
+  /* Fey teal accent */
+  --accent: #4DBE95;
+  --accent-foreground: #070709;
+
+  /* Fey red for destructive */
+  --destructive: #D84F68;
+
+  /* Fey-style subtle borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.10);
+  --input: #101116;
+  --ring: #54BBF7;
+
+  /* Market colors - Fey accent style */
+  --positive: #4DBE95;          /* Fey teal */
+  --positive-muted: rgba(77, 190, 149, 0.15);
+  --negative: #D84F68;          /* Fey red */
+  --negative-muted: rgba(216, 79, 104, 0.15);
+
+  /* Platform colors - Kalshi=green, Polymarket=blue */
+  --kalshi: #22c55e;
+  --polymarket: #3b82f6;
+
+  /* Charts - Fey accent colors */
+  --chart-1: #54BBF7;           /* Sky blue */
+  --chart-2: #4DBE95;           /* Teal */
+  --chart-3: #6166DC;           /* Purple */
+  --chart-4: #C27C58;           /* Brown */
+  --chart-5: #D84F68;           /* Red */
+
+  /* Sidebar */
+  --sidebar: #070709;
+  --sidebar-foreground: #EEF0F1;
+  --sidebar-primary: #54BBF7;
+  --sidebar-primary-foreground: #070709;
+  --sidebar-accent: #131419;
+  --sidebar-accent-foreground: #EEF0F1;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #54BBF7;
+}
+
+/* Light theme override if needed */
+.light {
+  --background: #fafafa;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #14b8a6;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #7c3aed;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Monospace for numbers/prices */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Pointer cursor for interactive elements */
+  button,
+  [role="button"],
+  a,
+  select,
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="submit"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+}
+
+/* Fey Typography Utilities */
+@layer utilities {
+  .fey-price-lg {
+    @apply text-5xl font-mono font-bold tracking-tight;
+  }
+  .fey-price {
+    @apply font-mono font-medium tabular-nums;
+  }
+  .fey-heading {
+    @apply text-sm font-medium text-foreground;
+  }
+  .fey-body {
+    @apply text-sm text-muted-foreground;
+  }
+  .fey-caption {
+    @apply text-xs text-muted-foreground;
+  }
+  .fey-label {
+    @apply text-[11px] uppercase tracking-wider text-muted-foreground;
+  }
+}
+
+/* Fey Animations */
+@keyframes trade-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes trade-flash-green {
+  0% { background-color: transparent; }
+  15% { background-color: rgba(34, 197, 94, 0.15); }
+  100% { background-color: transparent; }
+}
+
+@keyframes trade-flash-red {
+  0% { background-color: transparent; }
+  15% { background-color: rgba(239, 68, 68, 0.15); }
+  100% { background-color: transparent; }
+}
+
+@keyframes tab-indicator {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.animate-trade-enter {
+  animation: trade-enter 200ms ease-out;
+}
+
+.animate-trade-flash-green {
+  animation: trade-flash-green 800ms ease-out;
+}
+
+.animate-trade-flash-red {
+  animation: trade-flash-red 800ms ease-out;
+}
+
+.animate-tab-indicator {
+  animation: tab-indicator 200ms ease-out;
+}
+
+/* Pro Trading Terminal Card Row Styles */
+@layer components {
+  .market-card-row {
+    @apply relative bg-card transition-all duration-200;
+    border-left: 4px solid transparent;
+  }
+
+  .market-card-row:first-child {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+  }
+
+  .market-card-row:last-child {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+
+  .market-card-row:hover {
+    @apply bg-card;
+    box-shadow: 0 4px 24px -8px var(--border-glow-color, rgba(255,255,255,0.1));
+    transform: translateX(2px);
+  }
+
+  .market-card-row.platform-kalshi {
+    border-left-color: var(--kalshi);
+    --border-glow-color: rgba(34, 197, 94, 0.25);
+  }
+
+  .market-card-row.platform-kalshi:hover {
+    border-left-color: var(--kalshi);
+    box-shadow: 0 4px 24px -8px rgba(34, 197, 94, 0.3),
+                inset 0 0 0 1px rgba(34, 197, 94, 0.1);
+  }
+
+  .market-card-row.platform-polymarket {
+    border-left-color: var(--polymarket);
+    --border-glow-color: rgba(59, 130, 246, 0.25);
+  }
+
+  .market-card-row.platform-polymarket:hover {
+    border-left-color: var(--polymarket);
+    box-shadow: 0 4px 24px -8px rgba(59, 130, 246, 0.3),
+                inset 0 0 0 1px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Live pulse animation */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.6);
+    }
+  }
+
+  .live-indicator {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Price highlight effects */
+  .price-positive {
+    text-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+
+  .price-negative {
+    text-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+
+}
+
+/* Gradient orb account button */
+@property --orb-x {
+  syntax: "<percentage>";
+  initial-value: 30%;
+  inherits: false;
+}
+
+@property --orb-y {
+  syntax: "<percentage>";
+  initial-value: 30%;
+  inherits: false;
+}
+
+.gradient-orb {
+  --orb-x: 30%;
+  --orb-y: 30%;
+  background:
+    radial-gradient(circle at var(--orb-x) var(--orb-y), #c4b5fd 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, #818cf8 0%, transparent 45%),
+    radial-gradient(circle at 40% 70%, #67e8f9 0%, transparent 40%),
+    radial-gradient(circle at 60% 30%, #a78bfa 0%, transparent 50%),
+    linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #a855f7 50%, #6366f1 75%, #0ea5e9 100%) !important;
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.35);
+  transition: --orb-x 0.4s ease, --orb-y 0.4s ease;
+}
+
+.gradient-orb:hover {
+  --orb-x: 50%;
+  --orb-y: 50%;
+}
+
+/* Gradient border search input */
+.search-input {
+  transition: all 0.2s ease;
+}
+
+.search-input:focus,
+.search-input:focus-visible {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  background-image: linear-gradient(#242424, #242424),
+                    linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #a855f7 50%, #6366f1 75%, #0ea5e9 100%) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+}
+
+/* Custom scrollbar for Fey dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070709;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202427;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #373E44;
+}
+
+/* Flash highlight animation for updated content */
+@keyframes content-flash {
+  0% {
+    background-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.animate-content-flash {
+  animation: content-flash 1.5s ease-out forwards;
+  border-radius: 0.5rem;
+}
+
+/* Subtle pulse for streaming content */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Research report section styling - handles AI-generated pseudo-headings */
+/* When a paragraph contains ONLY bold text, style it as a subheading */
+.text-muted-foreground > p:has(> strong:only-child) {
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.text-muted-foreground > p:has(> strong:only-child):first-child {
+  margin-top: 0;
+}
+
+/* Make bold-only paragraphs look like headings */
+.text-muted-foreground > p > strong:only-child {
+  display: block;
+  color: var(--foreground);
+}
