@@ -84,7 +84,7 @@ export const Hero = () => {
             className="pt-4"
           >
             <Link
-              href="/markets"
+              href="/#"
               className="group inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#EEF0F1] text-[#070709] font-semibold text-base hover:bg-white transition-colors"
             >
               Enter Terminal
