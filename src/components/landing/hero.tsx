@@ -117,37 +117,49 @@ export const Hero = () => {
             className="pt-2 sm:pt-4"
           >
             {isSubmitted ? (
-              <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#131419] border border-[#4DBE95]/30 text-[#4DBE95]">
+              <div className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#131419] border border-[#4DBE95]/30 text-[#4DBE95]">
                 <Check className="w-5 h-5" />
                 <span className="font-medium">You&apos;re on the list!</span>
               </div>
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md mx-auto"
+                className="relative group w-[85vw] max-w-[420px] mx-auto"
               >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  className="w-full sm:flex-1 px-4 py-3.5 rounded-lg bg-[#131419] border border-[#1e1f25] text-[#EEF0F1] placeholder-[#64727C] focus:outline-none focus:border-[#54BBF7]/50 focus:ring-1 focus:ring-[#54BBF7]/50 transition-colors text-sm sm:text-base"
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-lg bg-[#EEF0F1] text-[#070709] font-semibold text-sm sm:text-base hover:bg-white transition-colors min-h-[48px] touch-manipulation disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <>
-                      Join Waitlist
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                    </>
-                  )}
-                </button>
+                {/* Layer 1: Background glow */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#54BBF7] via-[#7DD3FC] to-[#54BBF7] blur-xl transition-all duration-700 opacity-10 group-hover:opacity-40" />
+
+                {/* Layer 2: Main container */}
+                <div className="relative flex items-center h-[44px] sm:h-[54px] rounded-full border border-[#54BBF7]/15 bg-gradient-to-r from-[#1a1d2e]/95 via-[#252837]/95 to-[#1a1d2e]/95 backdrop-blur-xl shadow-2xl shadow-[#54BBF7]/5 group-hover:border-[#54BBF7]/50 group-hover:shadow-[#54BBF7]/20 transition-all duration-700 ease-out overflow-hidden">
+                  {/* Layer 3: Shimmer overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+                  {/* Layer 4: Input field */}
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    className="relative z-10 bg-transparent py-2 sm:py-3 text-[12px] sm:text-[14px] font-light tracking-wide text-white placeholder-white/30 focus:outline-none focus:placeholder-transparent transition-all duration-700 flex-1 text-center pl-5 sm:pl-10"
+                  />
+
+                  {/* Layer 5: Submit button */}
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="relative flex-shrink-0 flex items-center justify-center w-[36px] h-[36px] sm:w-[46px] sm:h-[46px] rounded-full transition-all duration-500 focus:outline-none mr-[4px] bg-[#54BBF7]/10 backdrop-blur-sm hover:bg-[#54BBF7]/20 disabled:cursor-not-allowed"
+                  >
+                    {/* Inner highlight layer */}
+                    <div className="absolute inset-[2px] rounded-full bg-gradient-to-br from-white/20 to-transparent opacity-50" />
+
+                    {isLoading ? (
+                      <Loader2 className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 text-[#54BBF7] animate-spin" />
+                    ) : (
+                      <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 text-[#54BBF7] transition-all duration-500 group-hover:translate-x-0.5 group-hover:scale-110" />
+                    )}
+                  </button>
+                </div>
               </form>
             )}
           </motion.div>
